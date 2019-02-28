@@ -74,4 +74,4 @@ git submodule add git@github.com:softozor/server-koan-spec spec/features
 
 12. The Solution Explorer should look like this eventually:
 
-![Solution Explorer](doc/img/configuredVSProject.png)
+![Solution Explorer](img/configuredVSProject.png)
