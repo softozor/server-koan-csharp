@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Api.Models
+﻿namespace Api.Models
 {
   public class User
   {
