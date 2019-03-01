@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServerKoan\ServerKoan.csproj" />
+    <ProjectReference Include="..\ServerKoan\Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
