@@ -1,5 +1,7 @@
 ﻿using GraphQL;
+using GraphQL.Http;
 using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,8 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Api
 {
-  using GraphQL.Http;
-  using GraphQL.Server.Ui.Playground;
   using Models;
 
   class Startup : StartupBase
