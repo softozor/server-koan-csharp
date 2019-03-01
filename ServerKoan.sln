@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerKoan", "ServerKoan\ServerKoan.csproj", "{A22C5FAC-8790-4740-BD6E-3A074CDD9B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerKoan", "ServerKoan\ServerKoan.csproj", "{A22C5FAC-8790-4740-BD6E-3A074CDD9B40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spec", "spec\spec.csproj", "{40812D0E-5394-47B6-A11A-597041BD26EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "spec", "spec\spec.csproj", "{40812D0E-5394-47B6-A11A-597041BD26EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9ABEE228-6156-48B4-8727-04284A4DBCA2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
