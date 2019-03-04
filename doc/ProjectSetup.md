@@ -1,5 +1,12 @@
 # The steps I followed to setup the project
 
+## Visual Studio setup
+
+* install [SemanticColorizer](https://marketplace.visualstudio.com/items?itemName=AndreasReischuck.SemanticColorizer) to highlight code (class members, variables, namespaces, etc.) appropriately
+* install [Microsoft Code Analysis](https://docs.microsoft.com/en-us/visualstudio/code-quality/install-fxcop-analyzers?view=vs-2017) to perform static code analysis
+
+## Project setup
+
 The integration of the Gherkin features as well as the initial generation of the corresponding steps' skeletons follow more or less [specflow getting started guide](https://specflow.org/getting-started/)'s .
 
 1. Start up Visual Studio 2017
@@ -58,11 +65,16 @@ The other solution to make the "Generate Step Definitions" in the context menu i
   </configSections>
   <specFlow>
     <unitTestProvider name="MsTest" />
+    <generator
+      allowDebugGeneratedFiles="true"
+      allowRowTests="true"
+      generateAsyncTests="false"
+      path="{not-specified}" />
   </specFlow>
 </configuration>
 ``` 
   
-The problem here is that by default there is no such `App.config` file and SpecFlow will choose NUnit instead of MsTest.
+The problem here is that by default there is no such `App.config` file and SpecFlow will choose NUnit instead of MsTest. In addition to that, if you don't set `allowDebugGeneratedFiles="true"`, you won't be able to debug your test code (e.g. breakpoints won't hit). See the [documentation](https://specflow.org/documentation/Configuration/) for more information.
   
 10. Add [server koan spec](https://github.com/softozor/server-koan-spec) submodule to the created github's root repository folder:
 
@@ -75,3 +87,26 @@ git submodule add git@github.com:softozor/server-koan-spec spec/features
 12. The Solution Explorer should look like this eventually:
 
 ![Solution Explorer](img/configuredVSProject.png)
+
+Eventually, make sure that you have the following NuGet packages installed:
+
+```
+PM> Get-Package
+
+Id                                  Versions                                 ProjectName                                                                                                                                                                     
+--                                  --------                                 -----------                                                                                                                                                                     
+GraphQL.Server                      {1.6.3}                                  Api                                                                                                                                                                             
+Microsoft.AspNetCore                {2.2.0}                                  Api                                                                                                                                                                             
+Microsoft.NETCore.App               {2.1}                                    Api                                                                                                                                                                             
+GraphQL.Server.Ui.Playground        {3.4.0}                                  Api                                                                                                                                                                             
+GraphQL.Server.Transports.AspNet... {3.4.0}                                  Api                                                                                                                                                                             
+GraphQL                             {2.4.0}                                  Api                                                                                                                                                                             
+MSTest.TestFramework                {1.4.0}                                  spec                                                                                                                                                                            
+MSTest.TestAdapter                  {1.4.0}                                  spec                                                                                                                                                                            
+Microsoft.AspNetCore.TestHost       {2.2.0}                                  spec                                                                                                                                                                            
+System.Configuration.Configurati... {4.5.0}                                  spec                                                                                                                                                                            
+Microsoft.NETCore.App               {2.1}                                    spec                                                                                                                                                                            
+SpecFlow.MsTest                     {2.4.1}                                  spec                                                                                                                                                                            
+Microsoft.NET.Test.Sdk              {16.0.0}                                 spec                                                                                                                                                                            
+GraphQL                             {2.4.0}                                  spec                      
+```
