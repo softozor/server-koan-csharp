@@ -32,15 +32,15 @@ namespace Api
 
     private void ConfigureTestDatabase(IServiceCollection services)
     {
-      services.AddDbContext<ServerKoanContext>(options =>
-                    options.UseInMemoryDatabase(databaseName: "ServerKoan"));
+      //services.AddDbContext<ServerKoanContext>(options =>
+      //              options.UseInMemoryDatabase(databaseName: "ServerKoan"));
     }
 
     private void ConfigureDefaultDatabase(IServiceCollection services)
     {
-      var rootConf = Configuration as IConfigurationRoot;
-      services.AddDbContext<ServerKoanContext>(options =>
-                    options.UseMySql(rootConf.GetConnectionString("DefaultConnection")));
+      //var rootConf = Configuration as IConfigurationRoot;
+      //services.AddDbContext<ServerKoanContext>(options =>
+      //              options.UseMySql(rootConf.GetConnectionString("DefaultConnection")));
     }
 
     public override void ConfigureServices(IServiceCollection services)
