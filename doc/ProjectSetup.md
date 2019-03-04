@@ -75,3 +75,26 @@ git submodule add git@github.com:softozor/server-koan-spec spec/features
 12. The Solution Explorer should look like this eventually:
 
 ![Solution Explorer](img/configuredVSProject.png)
+
+Eventually, make sure that you have the following NuGet packages installed:
+
+```
+PM> Get-Package
+
+Id                                  Versions                                 ProjectName                                                                                                                                                                     
+--                                  --------                                 -----------                                                                                                                                                                     
+GraphQL.Server                      {1.6.3}                                  Api                                                                                                                                                                             
+Microsoft.AspNetCore                {2.2.0}                                  Api                                                                                                                                                                             
+Microsoft.NETCore.App               {2.1}                                    Api                                                                                                                                                                             
+GraphQL.Server.Ui.Playground        {3.4.0}                                  Api                                                                                                                                                                             
+GraphQL.Server.Transports.AspNet... {3.4.0}                                  Api                                                                                                                                                                             
+GraphQL                             {2.4.0}                                  Api                                                                                                                                                                             
+MSTest.TestFramework                {1.4.0}                                  spec                                                                                                                                                                            
+MSTest.TestAdapter                  {1.4.0}                                  spec                                                                                                                                                                            
+Microsoft.AspNetCore.TestHost       {2.2.0}                                  spec                                                                                                                                                                            
+System.Configuration.Configurati... {4.5.0}                                  spec                                                                                                                                                                            
+Microsoft.NETCore.App               {2.1}                                    spec                                                                                                                                                                            
+SpecFlow.MsTest                     {2.4.1}                                  spec                                                                                                                                                                            
+Microsoft.NET.Test.Sdk              {16.0.0}                                 spec                                                                                                                                                                            
+GraphQL                             {2.4.0}                                  spec                      
+```
