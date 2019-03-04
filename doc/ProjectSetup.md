@@ -3,6 +3,7 @@
 ## Visual Studio setup
 
 * install [SemanticColorizer](https://marketplace.visualstudio.com/items?itemName=AndreasReischuck.SemanticColorizer) to highlight code (class members, variables, namespaces, etc.) appropriately
+* install [Microsoft Code Analysis](https://docs.microsoft.com/en-us/visualstudio/code-quality/install-fxcop-analyzers?view=vs-2017) to perform static code analysis
 
 ## Project setup
 
