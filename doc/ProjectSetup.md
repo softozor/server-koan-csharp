@@ -58,11 +58,16 @@ The other solution to make the "Generate Step Definitions" in the context menu i
   </configSections>
   <specFlow>
     <unitTestProvider name="MsTest" />
+    <generator
+      allowDebugGeneratedFiles="true"
+      allowRowTests="true"
+      generateAsyncTests="false"
+      path="{not-specified}" />
   </specFlow>
 </configuration>
 ``` 
   
-The problem here is that by default there is no such `App.config` file and SpecFlow will choose NUnit instead of MsTest.
+The problem here is that by default there is no such `App.config` file and SpecFlow will choose NUnit instead of MsTest. In addition to that, if you don't set `allowDebugGeneratedFiles="true"`, you won't be able to debug your test code (e.g. breakpoints won't hit).
   
 10. Add [server koan spec](https://github.com/softozor/server-koan-spec) submodule to the created github's root repository folder:
 
