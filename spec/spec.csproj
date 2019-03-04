@@ -13,6 +13,7 @@
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
     <PackageReference Include="SpecFlow.MsTest" Version="2.4.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +36,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>RegisterUser.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Hooks.cs">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
