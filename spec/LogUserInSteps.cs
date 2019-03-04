@@ -8,10 +8,13 @@ namespace spec
   public class LogUserInSteps
   {
     private readonly HttpClient client = TestServer.Client;
+    private static readonly log4net.ILog log =
+        log4net.LogManager.GetLogger(typeof(LogUserInSteps));
 
     [Given(@"the User is not logged in")]
     public void GivenTheUserIsNotLoggedIn()
     {
+      log.Info("Given the User is not logged in");
       ScenarioContext.Current.Pending();
     }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Api
 {
@@ -12,6 +13,11 @@ namespace Api
 
     private static IWebHost BuildWebHost(string[] args) =>
       WebHost.CreateDefaultBuilder(args)
+       .ConfigureLogging(logging =>
+       {
+         logging.AddLog4Net();
+         logging.SetMinimumLevel(LogLevel.Debug);
+       })
        .UseStartup<Startup>()
        .UseUrls("http://localhost:8000")
        .Build();

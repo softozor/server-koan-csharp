@@ -2,6 +2,7 @@
 using Api;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace spec
 {
@@ -11,6 +12,11 @@ namespace spec
 
     private static IWebHostBuilder GetWebHostBuilder() =>
      WebHost.CreateDefaultBuilder()
+      .ConfigureLogging(logging =>
+      {
+        logging.AddLog4Net();
+        logging.SetMinimumLevel(LogLevel.Debug);
+      })
       .UseEnvironment("Test")
       .UseStartup<Startup>();
 
