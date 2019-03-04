@@ -1,5 +1,11 @@
 # The steps I followed to setup the project
 
+## Visual Studio setup
+
+* install [SemanticColorizer](https://marketplace.visualstudio.com/items?itemName=AndreasReischuck.SemanticColorizer) to highlight code (class members, variables, namespaces, etc.) appropriately
+
+## Project setup
+
 The integration of the Gherkin features as well as the initial generation of the corresponding steps' skeletons follow more or less [specflow getting started guide](https://specflow.org/getting-started/)'s .
 
 1. Start up Visual Studio 2017
