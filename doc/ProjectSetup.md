@@ -67,7 +67,7 @@ The other solution to make the "Generate Step Definitions" in the context menu i
 </configuration>
 ``` 
   
-The problem here is that by default there is no such `App.config` file and SpecFlow will choose NUnit instead of MsTest. In addition to that, if you don't set `allowDebugGeneratedFiles="true"`, you won't be able to debug your test code (e.g. breakpoints won't hit).
+The problem here is that by default there is no such `App.config` file and SpecFlow will choose NUnit instead of MsTest. In addition to that, if you don't set `allowDebugGeneratedFiles="true"`, you won't be able to debug your test code (e.g. breakpoints won't hit). See the [documentation](https://specflow.org/documentation/Configuration/) for more information.
   
 10. Add [server koan spec](https://github.com/softozor/server-koan-spec) submodule to the created github's root repository folder:
 
