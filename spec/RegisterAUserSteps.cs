@@ -1,9 +1,9 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Api.Models;
+using GraphQL.Client;
+using GraphQL.Common.Request;
+using GraphQL.Common.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
 using TechTalk.SpecFlow;
 
 namespace spec
@@ -11,10 +11,10 @@ namespace spec
   [Binding]
   public class RegisterAUserSteps
   {
-    private readonly HttpClient client = TestServer.Client;
+    private readonly IGraphQLClient client = TestServer.Client;
     private static readonly log4net.ILog log =
         log4net.LogManager.GetLogger(typeof(RegisterAUserSteps));
-    private HttpResponseMessage graphqlResponse;
+    private GraphQLResponse graphqlResponse;
 
     [Given(@"an unregistered User")]
     public void GivenAnUnregisteredUser()
@@ -32,14 +32,13 @@ namespace spec
     public async Task WhenHeRegistersWithAUsernameAndAPassword()
     {
       log.Info("Define query");
-      const string query = @"{
-                ""query"": ""query { user { id username } }""
-            }";
-      var content = new StringContent(query, Encoding.UTF8, "application/json");
+      var query = new GraphQLRequest
+      {
+        Query = @"query { user { id username } }"
+      };
 
-      // When
       log.Info("Querying the server");
-      graphqlResponse = await client.PostAsync("/graphql", content);
+      graphqlResponse = await client.SendQueryAsync(query);
       //ScenarioContext.Current.Pending();
     }
 
@@ -50,18 +49,16 @@ namespace spec
     }
 
     [Then(@"he gets a success response")]
-    public async Task ThenHeGetsASuccessResponse()
+    public void ThenHeGetsASuccessResponse()
     {
       //ScenarioContext.Current.Pending();
-      graphqlResponse.EnsureSuccessStatusCode();
-      var responseString = await graphqlResponse.Content.ReadAsStringAsync();
-      log.Info($"Server response = {responseString}");
-      Assert.IsNotNull(responseString);
-      //const string responseString = @"{""data"":{""user"":{""id"":""1"",""name"":""zad""}}}";
-      var jobj = JObject.Parse(responseString);
-      Assert.IsNotNull(jobj);
-      Assert.AreEqual(1, (int)jobj["data"]["user"]["id"]);
-      Assert.AreEqual("zad", (string)jobj["data"]["user"]["username"]);
+      log.Info($"Server response = {graphqlResponse.ToString()}");
+      log.Info($"User id  = {graphqlResponse.Data.user.id}");
+      log.Info($"Username = {graphqlResponse.Data.user.username}");
+
+      var user = graphqlResponse.GetDataFieldAs<User>("user");
+      Assert.AreEqual("1", user.Id);
+      Assert.AreEqual("zad", user.Username);
     }
 
     [Then(@"his account gets activated")]
