@@ -4,13 +4,29 @@ using GraphQL.Client;
 using GraphQL.Client.Http;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace spec
 {
-  public static class TestServer
+  public class TestServer
   {
-    private static IGraphQLClient client;
+    private IGraphQLClient client;
+    private Microsoft.AspNetCore.TestHost.TestServer server;
+
+    public string RelativePathToGraphqlRequests
+    {
+      get
+      {
+        using (var scope = server.Host.Services.CreateScope())
+        {
+          var services = scope.ServiceProvider;
+          var config = services.GetService<IConfiguration>();
+          return config.GetSection("GraphQL")["PathToGraphqlRequests"];
+        }
+      }
+    }
 
     private static IWebHostBuilder GetWebHostBuilder() =>
      WebHost.CreateDefaultBuilder()
@@ -22,14 +38,23 @@ namespace spec
       .UseEnvironment("Test")
       .UseStartup<Startup>();
 
-    static public IGraphQLClient Client
+    private static Microsoft.AspNetCore.TestHost.TestServer CreateTestServer()
+    {
+      var builder = GetWebHostBuilder();
+      return new Microsoft.AspNetCore.TestHost.TestServer(builder);
+    }
+
+    public TestServer()
+    {
+      server = CreateTestServer();
+    }
+
+    public IGraphQLClient Client
     {
       get
       {
         if (client == null)
         {
-          var builder = GetWebHostBuilder();
-          var server = new Microsoft.AspNetCore.TestHost.TestServer(builder);
           var options = new GraphQLHttpClientOptions
           {
             EndPoint = new System.Uri("http://localhost/graphql"),

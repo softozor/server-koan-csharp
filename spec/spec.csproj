@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GraphQL\Utils.csproj" />
     <ProjectReference Include="..\ServerKoan\Api.csproj" />
   </ItemGroup>
 
@@ -41,12 +42,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RegisterUser.feature</DependentUpon>
     </Compile>
-    <Compile Update="Hooks.cs">
+    <Compile Update="GraphqlSupport.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="features\Authentication\LogUserIn.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LogUserIn.feature.cs</LastGenOutput>
@@ -55,6 +62,14 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterUser.feature.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="fixtures\**" CopyToOutputDirectory="PreserveNewest" LinkBase="fixtures\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
