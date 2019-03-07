@@ -38,7 +38,7 @@ namespace Api
 
     private void ConfigureDefaultDatabase(IServiceCollection services)
     {
-      //var rootConf = Configuration as IConfigurationRoot;
+      //var rootConf = Configuration as IConfigurationRoot; // NOT necessary, see https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration?view=aspnetcore-2.2
       //services.AddDbContext<ServerKoanContext>(options =>
       //              options.UseMySql(rootConf.GetConnectionString("DefaultConnection")));
     }
