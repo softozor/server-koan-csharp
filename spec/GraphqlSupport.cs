@@ -1,5 +1,4 @@
 ﻿using BoDi;
-using GraphQL.Client;
 using TechTalk.SpecFlow;
 using Utils;
 
@@ -20,14 +19,9 @@ namespace spec
     [BeforeScenario]
     public void InitializeClient()
     {
-      objContainer.RegisterInstanceAs<IGraphQLClient>(server.Client);
-    }
-
-    [BeforeScenario]
-    public void InitializeRequestLoader()
-    {
       var loader = new GraphqlLoader(server.RelativePathToGraphqlRequests);
-      objContainer.RegisterInstanceAs<GraphqlLoader>(loader);
+      var client = new GraphqlClient(server.Client, loader);
+      objContainer.RegisterInstanceAs<GraphqlClient>(client);
     }
   }
 }

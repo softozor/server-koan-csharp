@@ -1,28 +1,23 @@
 ﻿using System.Threading.Tasks;
 using Api.Models;
-using Utils;
-using GraphQL.Client;
-using GraphQL.Common.Request;
 using GraphQL.Common.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
-using Microsoft.Extensions.Configuration;
+using Utils;
 
 namespace spec
 {
   [Binding]
   public class RegisterAUserSteps
   {
-    private readonly IGraphQLClient client;
-    private readonly GraphqlLoader requestLoader;
+    private readonly GraphqlClient client;
     private static readonly log4net.ILog log =
         log4net.LogManager.GetLogger(typeof(RegisterAUserSteps));
     private GraphQLResponse graphqlResponse;
 
-    public RegisterAUserSteps(IGraphQLClient client, GraphqlLoader loader)
+    public RegisterAUserSteps(GraphqlClient client)
     {
       this.client = client;
-      this.requestLoader = loader;
     }
 
     [Given(@"an unregistered User")]
@@ -41,18 +36,7 @@ namespace spec
     public async Task WhenHeRegistersWithAUsernameAndAPassword()
     {
       log.Info("Define query");
-
-      log.Info($"Test query = {requestLoader.FromFile("test")}");
-
-      var query = new GraphQLRequest
-      {
-        Query = requestLoader.FromFile("test")
-      };
-
-      log.Info($"Test query = {query.Query}");
-
-      log.Info("Querying the server");
-      graphqlResponse = await client.SendQueryAsync(query);
+      graphqlResponse = await client.SendQuery("Test");
       //ScenarioContext.Current.Pending();
     }
 
