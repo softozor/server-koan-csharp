@@ -1,55 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Api.Models;
-using GraphQL.Common.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using TechTalk.SpecFlow;
 using Utils;
 
 namespace spec
 {
-  using Fixtures = Dictionary<string, object>;
-
-  [JsonDataFixture(FixtureName = "NewUser", DataType = typeof(User))]
+  [JsonDataFixture(FixtureName = "newUser")]
   [Binding]
-  public class RegisterAUserSteps
+  public class RegisterAUserSteps : BaseSteps
   {
-    private readonly GraphqlClient client;
     private static readonly log4net.ILog log =
         log4net.LogManager.GetLogger(typeof(RegisterAUserSteps));
-    private GraphQLResponse graphqlResponse;
-    private Fixtures fixtures;
-
-    private void InterpretFixtures()
-    {
-      var classAttrs = GetType().GetCustomAttributes(typeof(JsonDataFixture), true);
-      if (classAttrs != null)
-      {
-        fixtures = classAttrs.Select(attribute => 
-        {
-          var attr = attribute as JsonDataFixture;
-          var jsonData = JsonConvert.DeserializeObject(File.ReadAllText(attr.PathToFixture), attr.DataType);
-          return new { attr.FixtureName, jsonData };
-        }).ToDictionary(t => t.FixtureName, t => t.jsonData);
-      }
-    }
+    private User newUser;
 
     public RegisterAUserSteps(GraphqlClient client)
+      : base(client)
     {
-      this.client = client;
-
-      InterpretFixtures();
     }
-
 
     [Given(@"an unregistered User")]
     public void GivenAnUnregisteredUser()
     {
       log.Info("The user has no token defined anywhere");
+      log.Info($"newUserData = {newUser.Username}");
     }
 
     [Given(@"a registered User")]
@@ -62,7 +36,7 @@ namespace spec
     public async Task WhenHeRegistersWithAUsernameAndAPassword()
     {
       log.Info("Define query");
-      graphqlResponse = await client.SendQuery("Test");
+      ServerResponse = await Client.SendQuery("Test");
       //ScenarioContext.Current.Pending();
     }
 
@@ -76,11 +50,11 @@ namespace spec
     public void ThenHeGetsASuccessResponse()
     {
       //ScenarioContext.Current.Pending();
-      log.Info($"Server response = {graphqlResponse.ToString()}");
-      log.Info($"User id  = {graphqlResponse.Data.user.id}");
-      log.Info($"Username = {graphqlResponse.Data.user.username}");
+      log.Info($"Server response = {ServerResponse.ToString()}");
+      log.Info($"User id  = {ServerResponse.Data.user.id}");
+      log.Info($"Username = {ServerResponse.Data.user.username}");
 
-      var user = graphqlResponse.GetDataFieldAs<User>("user");
+      var user = ServerResponse.GetDataFieldAs<User>("user");
       Assert.AreEqual("1", user.Id);
       Assert.AreEqual("zad", user.Username);
     }

@@ -16,7 +16,7 @@ namespace Utils
       this.requestLoader = loader;
     }
 
-    private string tryToGetRequestFromOperationName(string operationName)
+    private string GetRequestFromOperationName(string operationName)
     {
       var query = requestLoader.FromFile(operationName);
       if(!query.Contains(operationName))
@@ -30,7 +30,7 @@ namespace Utils
     {
       return new GraphQLRequest
       {
-        Query = tryToGetRequestFromOperationName(operationName),
+        Query = GetRequestFromOperationName(operationName),
         OperationName = operationName,
         Variables = variables
       };

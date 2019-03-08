@@ -5,7 +5,6 @@ namespace spec
   class JsonDataFixture : System.Attribute
   {
     public string FixtureName { get; set; }
-    public System.Type DataType { get; set; }
 
     public string PathToFixture
     {
