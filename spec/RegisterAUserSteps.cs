@@ -1,12 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Api.Models;
 using GraphQL.Common.Response;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using TechTalk.SpecFlow;
 using Utils;
 
 namespace spec
 {
+  using Fixtures = Dictionary<string, object>;
+
+  [JsonDataFixture(FixtureName = "NewUser", DataType = typeof(User))]
   [Binding]
   public class RegisterAUserSteps
   {
@@ -14,11 +22,29 @@ namespace spec
     private static readonly log4net.ILog log =
         log4net.LogManager.GetLogger(typeof(RegisterAUserSteps));
     private GraphQLResponse graphqlResponse;
+    private Fixtures fixtures;
+
+    private void InterpretFixtures()
+    {
+      var classAttrs = GetType().GetCustomAttributes(typeof(JsonDataFixture), true);
+      if (classAttrs != null)
+      {
+        fixtures = classAttrs.Select(attribute => 
+        {
+          var attr = attribute as JsonDataFixture;
+          var jsonData = JsonConvert.DeserializeObject(File.ReadAllText(attr.PathToFixture), attr.DataType);
+          return new { attr.FixtureName, jsonData };
+        }).ToDictionary(t => t.FixtureName, t => t.jsonData);
+      }
+    }
 
     public RegisterAUserSteps(GraphqlClient client)
     {
       this.client = client;
+
+      InterpretFixtures();
     }
+
 
     [Given(@"an unregistered User")]
     public void GivenAnUnregisteredUser()
