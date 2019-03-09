@@ -4,29 +4,21 @@ using GraphQL.Client;
 using GraphQL.Client.Http;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace spec
+namespace Utils
 {
-  public class TestServer
+  public class CoreServices
   {
     private IGraphQLClient client;
-    private Microsoft.AspNetCore.TestHost.TestServer server;
 
-    public string RelativePathToGraphqlRequests
+    private static Microsoft.AspNetCore.TestHost.TestServer CreateTestServer()
     {
-      get
-      {
-        using (var scope = server.Host.Services.CreateScope())
-        {
-          var services = scope.ServiceProvider;
-          var config = services.GetService<IConfiguration>();
-          return config.GetSection("GraphQL")["PathToGraphqlRequests"];
-        }
-      }
+      var builder = GetWebHostBuilder();
+      return new Microsoft.AspNetCore.TestHost.TestServer(builder);
     }
+
+    private Microsoft.AspNetCore.TestHost.TestServer server = CreateTestServer();
 
     private static IWebHostBuilder GetWebHostBuilder() =>
      WebHost.CreateDefaultBuilder()
@@ -37,17 +29,6 @@ namespace spec
       })
       .UseEnvironment("Test")
       .UseStartup<Startup>();
-
-    private static Microsoft.AspNetCore.TestHost.TestServer CreateTestServer()
-    {
-      var builder = GetWebHostBuilder();
-      return new Microsoft.AspNetCore.TestHost.TestServer(builder);
-    }
-
-    public TestServer()
-    {
-      server = CreateTestServer();
-    }
 
     public IGraphQLClient Client
     {

@@ -11,7 +11,6 @@ namespace spec
   {
     static private void DoFillFieldWithFixtureData(BaseSteps instance, FieldInfo field, JsonDataFixture fixture)
     {
-      // TODO: PathToFixture should be replaced by a read of the config
       var jsonData = JsonConvert.DeserializeObject(File.ReadAllText(fixture.PathToFixture), field.FieldType);
       field.SetValue(instance, jsonData);
     }

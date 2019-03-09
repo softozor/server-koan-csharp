@@ -11,8 +11,6 @@
     <PackageReference Include="GraphQL.Client" Version="2.0.0-alpha.2" />
     <PackageReference Include="GraphQL.Common" Version="2.0.0-alpha.2" />
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="2.2.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
@@ -23,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GraphQL\Utils.csproj" />
-    <ProjectReference Include="..\ServerKoan\Api.csproj" />
+    <ProjectReference Include="..\ServerKoan\App.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,9 +50,6 @@
     <None Update="App.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="features\Authentication\LogUserIn.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>LogUserIn.feature.cs</LastGenOutput>
@@ -62,6 +57,9 @@
     <None Update="features\Authentication\RegisterUser.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RegisterUser.feature.cs</LastGenOutput>
+    </None>
+    <None Update="fixturesSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   

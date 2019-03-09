@@ -1,0 +1,4 @@
+{
+  "PathToDataFixtures": "fixtures\\Authentication",
+  "PathToGraphqlFixtures": "fixtures\\graphql"
+}

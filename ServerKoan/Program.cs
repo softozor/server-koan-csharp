@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore;
+﻿using Api;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Api
+namespace App
 {
   class Program
   {

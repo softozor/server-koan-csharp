@@ -12,9 +12,14 @@ namespace Utils
       this.pathToGraphqlFixtures = pathToGraphqlFixtures;
     }
 
+    private string PathToGraphqlFixture(string filenameWithoutExt)
+    {
+      return Path.Combine(pathToGraphqlFixtures, filenameWithoutExt + ".graphql");
+    }
+
     public string FromFile(string filenameWithoutExt)
     {
-      string result = File.ReadAllText(Path.Combine(pathToGraphqlFixtures, filenameWithoutExt + ".graphql"));
+      string result = File.ReadAllText(PathToGraphqlFixture(filenameWithoutExt));
       return Regex.Replace(result, @"\n", "");
     }
   }
