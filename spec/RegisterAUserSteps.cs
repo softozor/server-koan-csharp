@@ -6,15 +6,14 @@ using Utils;
 
 namespace spec
 {
-  [JsonDataFixture(FixtureName = "newUser")]
+  [JsonDataFixture(FixtureName = "NewUser")]
   [Binding]
   public class RegisterAUserSteps : BaseSteps
   {
     private static readonly log4net.ILog log =
         log4net.LogManager.GetLogger(typeof(RegisterAUserSteps));
 
-    // TODO: this here is not very elegant --> we probably want to use a property here instead!
-    private User newUser = null;
+    private User NewUser { get; set; }
 
     public RegisterAUserSteps(GraphqlClient client)
       : base(client)
@@ -25,7 +24,7 @@ namespace spec
     public void GivenAnUnregisteredUser()
     {
       log.Info("The user has no token defined anywhere");
-      log.Info($"newUserData = {newUser.Username}");
+      log.Info($"newUserData = {NewUser.Username}");
     }
 
     [Given(@"a registered User")]

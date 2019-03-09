@@ -9,22 +9,23 @@ namespace spec
 {
   public static class FixturesInjecter
   {
-    static private void DoFillFieldWithFixtureData(BaseSteps instance, FieldInfo field, JsonDataFixture fixture)
+    static private void DoFillPropertyWithFixtureData(BaseSteps instance, PropertyInfo property, JsonDataFixture fixture)
     {
-      var jsonData = JsonConvert.DeserializeObject(File.ReadAllText(fixture.PathToFixture), field.FieldType);
-      field.SetValue(instance, jsonData);
+      var jsonData = JsonConvert.DeserializeObject(File.ReadAllText(fixture.PathToFixture), property.PropertyType);
+      property.SetValue(instance, jsonData);
     }
 
-    static private void FillFieldWithFixtureData(BaseSteps instance, JsonDataFixture fixture)
+    static private void FillPropertyWithFixtureData(BaseSteps instance, JsonDataFixture fixture)
     {
-      var field = instance.GetType().GetField(fixture.FixtureName, BindingFlags.NonPublic | BindingFlags.Instance);
-      if (field != null)
+      var property = instance.GetType().GetProperty(fixture.FixtureName, BindingFlags.NonPublic | BindingFlags.Instance);
+
+      if(property != null)
       {
-        DoFillFieldWithFixtureData(instance, field, fixture);
+        DoFillPropertyWithFixtureData(instance, property, fixture);
       }
       else
       {
-        throw new FixtureVariableNotFound($"No variable with name <{fixture.FixtureName}> found in class <{instance.GetType()}>");
+        throw new FixtureVariableNotFound($"No property with name <{fixture.FixtureName}> found in class <{instance.GetType()}>");
       }
     }
 
@@ -34,12 +35,13 @@ namespace spec
           .Where(attr => attr.GetType() == typeof(JsonDataFixture));
     }
 
+    // TODO: rename InjectFixturesIntoProperties
     static public void FillFixtureDataFromAttributes(BaseSteps instance)
     {
       var fixtureAttributes = GetDataFixtureAttributes(instance);
       foreach (JsonDataFixture fixture in fixtureAttributes)
       {
-        FillFieldWithFixtureData(instance, fixture);
+        FillPropertyWithFixtureData(instance, fixture);
       }
     }
   }
