@@ -12,6 +12,8 @@ namespace spec
   {
     private static readonly log4net.ILog log =
         log4net.LogManager.GetLogger(typeof(RegisterAUserSteps));
+
+    // TODO: this here is not very elegant --> we probably want to use a property here instead!
     private User newUser = null;
 
     public RegisterAUserSteps(GraphqlClient client)
