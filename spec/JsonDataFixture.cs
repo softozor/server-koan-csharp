@@ -7,13 +7,13 @@ namespace spec
   {
     private IConfigurationRoot Config { get; set; }
 
-    public string FixtureName { get; set; }
+    public string Name { get; set; }
 
-    public string PathToFixture
+    public string FullPath
     {
       get
       {
-        return Path.Combine(Config["PathToDataFixtures"], $"{FixtureName}.json");
+        return Path.Combine(Config["PathToDataFixtures"], $"{Name}.json");
       }
     }
 

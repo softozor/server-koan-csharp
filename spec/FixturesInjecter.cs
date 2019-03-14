@@ -11,13 +11,13 @@ namespace spec
   {
     static private void DoFillPropertyWithFixtureData(BaseSteps instance, PropertyInfo property, JsonDataFixture fixture)
     {
-      var jsonData = JsonConvert.DeserializeObject(File.ReadAllText(fixture.PathToFixture), property.PropertyType);
+      var jsonData = JsonConvert.DeserializeObject(File.ReadAllText(fixture.FullPath), property.PropertyType);
       property.SetValue(instance, jsonData);
     }
 
     static private void FillPropertyWithFixtureData(BaseSteps instance, JsonDataFixture fixture)
     {
-      var property = instance.GetType().GetProperty(fixture.FixtureName, BindingFlags.NonPublic | BindingFlags.Instance);
+      var property = instance.GetType().GetProperty(fixture.Name, BindingFlags.NonPublic | BindingFlags.Instance);
 
       if(property != null)
       {
@@ -25,7 +25,7 @@ namespace spec
       }
       else
       {
-        throw new FixtureVariableNotFound($"No property with name <{fixture.FixtureName}> found in class <{instance.GetType()}>");
+        throw new FixtureVariableNotFound($"No property with name <{fixture.Name}> found in class <{instance.GetType()}>");
       }
     }
 
