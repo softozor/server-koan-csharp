@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using GraphQL.Client;
+using GraphQL.Client.Http;
 using GraphQL.Common.Request;
 using GraphQL.Common.Response;
 
@@ -7,10 +7,12 @@ namespace Utils
 {
   public class GraphqlClient
   {
-    private readonly IGraphQLClient client;
+    private readonly GraphQLHttpClient client;
     private readonly GraphqlLoader requestLoader;
 
-    public GraphqlClient(IGraphQLClient client, GraphqlLoader loader)
+    public string JwtToken { get; private set; }
+
+    public GraphqlClient(GraphQLHttpClient client, GraphqlLoader loader)
     {
       this.client = client;
       this.requestLoader = loader;
@@ -26,6 +28,17 @@ namespace Utils
       return query;
     }
 
+    private void RemoveAuthenticationHeader()
+    {
+      client.DefaultRequestHeaders.Remove("Authorization"); // is that working when no "Authorization" element is present in the collection?
+    }
+
+    public void clearAuth()
+    {
+      JwtToken = string.Empty;
+      RemoveAuthenticationHeader();
+    }
+
     private GraphQLRequest GetRequest(string operationName, dynamic variables)
     {
       return new GraphQLRequest
@@ -36,14 +49,29 @@ namespace Utils
       };
     }
 
+    private bool NeedToAddAuthenticationHeader()
+    {
+      return !(client.DefaultRequestHeaders.Contains("Authorization") || JwtToken == string.Empty);
+    }
+
+    private void AddAuthenticationHeaderIfNecessary()
+    {
+      if (NeedToAddAuthenticationHeader())
+      {
+        client.DefaultRequestHeaders.Add("Authorization", $"bearer {JwtToken}");
+      }
+    }
+
     public Task<GraphQLResponse> SendMutation(string operationName, dynamic variables = null)
     {
+      AddAuthenticationHeaderIfNecessary();
       var req = GetRequest(operationName, variables);
       return client.SendMutationAsync(req);
     }
 
     public Task<GraphQLResponse> SendQuery(string operationName, dynamic variables = null)
     {
+      AddAuthenticationHeaderIfNecessary();
       var req = GetRequest(operationName, variables);
       return client.SendQueryAsync(req);
     }

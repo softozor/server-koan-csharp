@@ -10,3 +10,4 @@ The purpose of the code published to this repository is to learn C#. The impleme
 
 * [Project setup in Visual Studio 2017](doc/ProjectSetup.md)
 * [Learnings on SpecFlow](doc/SpecFlowLearnings.md)
+* [Learnings on GraphQL tests](doc/GraphqlTestsLearnings.md)

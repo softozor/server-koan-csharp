@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Headers;
 using Api;
-using GraphQL.Client;
 using GraphQL.Client.Http;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +9,7 @@ namespace Utils
 {
   public class CoreServices
   {
-    private IGraphQLClient client;
+    private GraphQLHttpClient client;
 
     private static Microsoft.AspNetCore.TestHost.TestServer CreateTestServer()
     {
@@ -30,7 +29,7 @@ namespace Utils
       .UseEnvironment("Test")
       .UseStartup<Startup>();
 
-    public IGraphQLClient Client
+    public GraphQLHttpClient Client
     {
       get
       {

@@ -6,7 +6,7 @@ using Utils;
 
 namespace spec
 {
-  [JsonDataFixture(FixtureName = "NewUser")]
+  [JsonDataFixture(Name = "NewUser")]
   [Binding]
   public class RegisterAUserSteps : BaseSteps
   {
@@ -23,31 +23,32 @@ namespace spec
     [Given(@"an unregistered User")]
     public void GivenAnUnregisteredUser()
     {
-      log.Info("The user has no token defined anywhere");
-      log.Info($"newUserData = {NewUser.Username}");
+      // TODO: double-check that the NewUser is not present in the database
+      ScenarioContext.Current.Pending();
     }
 
     [Given(@"a registered User")]
     public void GivenARegisteredUser()
     {
+      // TODO: double-check that the RegisteredUser is present in the database
       ScenarioContext.Current.Pending();
     }
 
-    [When(@"he registers with a username and a password")]
-    public async Task WhenHeRegistersWithAUsernameAndAPassword()
+    [When(@"she registers with a username and a password")]
+    public async Task WhenSheRegistersWithAUsernameAndAPassword()
     {
       log.Info("Define query");
       ServerResponse = await Client.SendQuery("Test");
       //ScenarioContext.Current.Pending();
     }
 
-    [When(@"he registers with his username and a password")]
-    public void WhenHeRegistersWithHisUsernameAndAPassword()
+    [When(@"she registers with her username and password")]
+    public void WhenSheRegistersWithHerUsernameAndPassword()
     {
       ScenarioContext.Current.Pending();
     }
 
-    [Then(@"he gets a success response")]
+    [Then(@"she gets a success response")]
     public void ThenHeGetsASuccessResponse()
     {
       //ScenarioContext.Current.Pending();
@@ -60,19 +61,19 @@ namespace spec
       Assert.AreEqual("zad", user.Username);
     }
 
-    [Then(@"his account gets activated")]
+    [Then(@"her account gets activated")]
     public void ThenHisAccountGetsActivated()
     {
       ScenarioContext.Current.Pending();
     }
 
-    [Then(@"he isn't logged in")]
+    [Then(@"she isn't logged in")]
     public void ThenHeIsnTLoggedIn()
     {
       ScenarioContext.Current.Pending();
     }
 
-    [Then(@"his account remains unchanged")]
+    [Then(@"her account remains unchanged")]
     public void ThenHisAccountRemainsUnchanged()
     {
       ScenarioContext.Current.Pending();
