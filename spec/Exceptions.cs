@@ -7,4 +7,12 @@
     public FixtureVariableNotFound(string message, System.Exception inner) : base(message, inner) { }
     protected FixtureVariableNotFound(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
   }
+
+  public class UnsupportedFixtureType : System.Exception
+  {
+    public UnsupportedFixtureType() : base() { }
+    public UnsupportedFixtureType(string message) : base(message) { }
+    public UnsupportedFixtureType(string message, System.Exception inner) : base(message, inner) { }
+    protected UnsupportedFixtureType(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+  }
 }

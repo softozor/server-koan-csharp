@@ -1,57 +1,96 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Threading.Tasks;
+using Api.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
+using Utils;
 
 namespace spec
 {
-
+  [JsonDataFixture(Name = "UnknownUser")]
+  [JsonDataFixture(Name = "RegisteredUser")]
   [Binding]
-  public class LogUserInSteps
+  public class LogUserInSteps : BaseSteps
   {
-    //private readonly HttpClient client = TestServer.Client;
+    private const string CURRENT_USER_KEY = "CurrentUser";
+    private const string LOGIN_OPERATION_NAME = "Login";
+
     private static readonly log4net.ILog log =
         log4net.LogManager.GetLogger(typeof(LogUserInSteps));
+    private User UnknownUser { get; set; }
+    private User RegisteredUser { get; set; }
+
+    public LogUserInSteps(GraphqlClient client)
+      : base(client)
+    {
+    }
 
     [Given(@"the User is not logged in")]
     public void GivenTheUserIsNotLoggedIn()
     {
-      log.Info("Given the User is not logged in");
-      ScenarioContext.Current.Pending();
+      Assert.IsTrue(String.IsNullOrEmpty(Client.JwtToken));
     }
 
-    [When(@"the User registers with valid username and password")]
-    public void WhenTheUserRegistersWithValidUsernameAndPassword()
+    private async Task logCurrentUserIn()
     {
-      ScenarioContext.Current.Pending();
+      var usr = ScenarioContext.Current.Get<User>(CURRENT_USER_KEY);
+      var variables = new
+      {
+        username = usr.Username,
+        password = usr.Password
+      };
+      ServerResponse = await Client.SendMutation(LOGIN_OPERATION_NAME, variables);
     }
 
-    [When(@"a User registers with invalid username and password")]
-    public void WhenAUserRegistersWithInvalidUsernameAndPassword()
+    [When(@"the User logs in with valid username and password")]
+    public async Task WhenTheUserLogsInWithValidUsernameAndPassword()
     {
-      ScenarioContext.Current.Pending();
+      ScenarioContext.Current.Add(CURRENT_USER_KEY, RegisteredUser);
+      Assert.IsTrue(AuthUtils.IsRegistered(RegisteredUser.Username));
+      await logCurrentUserIn();
     }
 
-    [When(@"a User registers with valid username and invalid password")]
-    public void WhenAUserRegistersWithValidUsernameAndInvalidPassword()
+    [When(@"a User logs in with invalid username and password")]
+    public async Task WhenAUserLogsInWithInvalidUsernameAndPassword()
     {
-      ScenarioContext.Current.Pending();
+      ScenarioContext.Current.Add(CURRENT_USER_KEY, UnknownUser);
+      Assert.IsFalse(AuthUtils.IsRegistered(UnknownUser.Username));
+      await logCurrentUserIn();
     }
 
-    [Then(@"his session opens for (.*) week")]
-    public void ThenHisSessionOpensForWeek(int p0)
+    [When(@"a User logs in with valid username and invalid password")]
+    public async Task WhenAUserLogsInWithValidUsernameAndInvalidPassword()
     {
-      ScenarioContext.Current.Pending();
+      var usr = RegisteredUser;
+      // any modification of the correct password will be wrong
+      usr.Password = usr.Password.Insert(0, "a");
+      ScenarioContext.Current.Add(CURRENT_USER_KEY, usr);
+      Assert.IsTrue(AuthUtils.IsRegistered(usr.Username));
+      await logCurrentUserIn();
     }
 
-    [Then(@"he gets a wrong credentials response")]
-    public void ThenHeGetsAWrongCredentialsResponse()
+    private int GetSessionDurationFromToken(string token)
     {
-      ScenarioContext.Current.Pending();
+      throw new NotImplementedException("Decoding the token has not been implemented yet.");
     }
 
-    [Then(@"he gets a wrong credententials response")]
-    public void ThenHeGetsAWrongCredententialsResponse()
+    [Then(@"her session opens for (.*) week")]
+    public void ThenHerSessionOpensForWeek(int expectedSessionDurationInWeeks)
     {
-      ScenarioContext.Current.Pending();
+      Assert.IsNull(ServerResponse.Data.login.error);
+      var token = ServerResponse.Data.login.token;
+      Assert.IsNotNull(token);
+      var actualSessionDurationInWeeks = GetSessionDurationFromToken(token);
+      Assert.AreEqual(expectedSessionDurationInWeeks, actualSessionDurationInWeeks);
+    }
+
+    [Then(@"she gets a wrong credentials response")]
+    public void ThenSheGetsAWrongCredentialsResponse()
+    {
+      var error = ServerResponse.Data.login.error;
+      Assert.IsNotNull(error);
+      var expectedError = "WRONG_CREDENTIALS";
+      Assert.AreEqual(expectedError, error.description);
     }
   }
 }

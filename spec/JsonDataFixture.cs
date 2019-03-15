@@ -1,9 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 
 namespace spec
 {
-  class JsonDataFixture : System.Attribute
+  [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+  class JsonDataFixture : Attribute
   {
     private IConfigurationRoot Config { get; set; }
 

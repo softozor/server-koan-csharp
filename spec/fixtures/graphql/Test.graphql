@@ -1,6 +1,0 @@
-﻿query Test { 
-  user { 
-    id 
-    username 
-  }
-}

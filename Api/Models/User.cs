@@ -6,5 +6,6 @@
     public string Username { get; set; }
     // TODO: we will need to encrypt this password
     public string Password { get; set; }
+    public bool Active { get; set; }
   }
 }

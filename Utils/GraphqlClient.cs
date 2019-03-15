@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GraphQL.Client.Http;
 using GraphQL.Common.Request;
 using GraphQL.Common.Response;
@@ -51,7 +52,7 @@ namespace Utils
 
     private bool NeedToAddAuthenticationHeader()
     {
-      return !(client.DefaultRequestHeaders.Contains("Authorization") || JwtToken == string.Empty);
+      return !(client.DefaultRequestHeaders.Contains("Authorization") || String.IsNullOrEmpty(JwtToken));
     }
 
     private void AddAuthenticationHeaderIfNecessary()

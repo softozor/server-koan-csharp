@@ -1,0 +1,7 @@
+﻿mutation Signup ($username: String!, $password: String!) { 
+  registerUser(username: $username, password: $password) { 
+    error {
+      description
+    }
+  }
+}
