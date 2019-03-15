@@ -10,7 +10,7 @@ namespace spec
   [JsonDataFixture(Name = "UnknownUser")]
   [JsonDataFixture(Name = "RegisteredUser")]
   [Binding]
-  public class RegisterAUserSteps : BaseSteps
+  class RegisterAUserSteps : BaseSteps
   {
     private const string CURRENT_USER_KEY = "CurrentUser";
     private const string ORIGINAL_PASSWORD_KEY = "OriginalPassword";

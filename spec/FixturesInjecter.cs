@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace spec
 {
-  public static class FixturesInjecter
+  static class FixturesInjecter
   {
     static private void DoFillPropertyWithFixtureData(BaseSteps instance, PropertyInfo property, JsonDataFixture fixture)
     {
@@ -35,8 +35,7 @@ namespace spec
           .Where(attr => attr.GetType() == typeof(JsonDataFixture));
     }
 
-    // TODO: rename InjectFixturesIntoProperties
-    static public void FillFixtureDataFromAttributes(BaseSteps instance)
+    static public void InjectFixturesIntoProperties(BaseSteps instance)
     {
       var fixtureAttributes = GetDataFixtureAttributes(instance);
       foreach (JsonDataFixture fixture in fixtureAttributes)

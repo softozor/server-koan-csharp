@@ -6,7 +6,7 @@ using Utils;
 namespace spec
 {
   [Binding]
-  public sealed class GraphqlSupport
+  sealed class GraphqlSupport
   {
     private readonly IObjectContainer objContainer;
     private readonly CoreServices services = new CoreServices();

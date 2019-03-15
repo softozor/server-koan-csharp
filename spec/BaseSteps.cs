@@ -3,7 +3,7 @@ using Utils;
 
 namespace spec
 {
-  public class BaseSteps
+  class BaseSteps
   {
     protected GraphQLResponse ServerResponse { get; set; }
     protected GraphqlClient Client { get; private set; }
@@ -11,7 +11,7 @@ namespace spec
     public BaseSteps(GraphqlClient client)
     {
       Client = client;
-      FixturesInjecter.FillFixtureDataFromAttributes(this);
+      FixturesInjecter.InjectFixturesIntoProperties(this);
     }
   }
 }
